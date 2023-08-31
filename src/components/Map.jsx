@@ -1,5 +1,4 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
-import styles from "./Map.module.css";
+import { useNavigate } from "react-router-dom";
 import {
   MapContainer,
   TileLayer,
@@ -8,11 +7,13 @@ import {
   useMap,
   useMapEvents,
 } from "react-leaflet";
+
+import styles from "./Map.module.css";
 import { useEffect, useState } from "react";
 import { useCities } from "../contexts/CitiesContext";
 import { useGeolocation } from "../hooks/useGeolocation";
-import Button from "./Button";
 import { useUrlPosition } from "../hooks/useUrlPosition";
+import Button from "./Button";
 
 function Map() {
   const { cities } = useCities();
@@ -22,7 +23,6 @@ function Map() {
     position: geoLocationPosition,
     getPosition,
   } = useGeolocation();
-
   const [mapLat, mapLng] = useUrlPosition();
 
   useEffect(
@@ -49,7 +49,6 @@ function Map() {
       )}
       <MapContainer
         center={mapPosition}
-        // center={[mapLat, mapLng]}
         zoom={6}
         scrollWheelZoom={true}
         className={styles.map}
@@ -87,7 +86,6 @@ function DetectClick() {
 
   useMapEvents({
     click: (e) => {
-      console.log(e);
       navigate(`form?lat=${e.latlng.lat}&lng=${e.latlng.lng}`);
     },
   });
